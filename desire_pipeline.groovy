@@ -1,5 +1,3 @@
-pipelineJob('DSL_Demo') {
-
 pipeline {
   agent {
      node { 
@@ -13,9 +11,11 @@ pipeline {
       }
     }
 
-    stage('No Converter-0') {
+    stage('Build') {
       steps {
         echo 'No converter for Builder: hudson.tasks.Ant'
+		withAnt(installation: 'Version 1.10.3') {
+                        sh "ant -f MisysPD/compile.xml"
       }
     }
 
@@ -30,5 +30,4 @@ pipeline {
   triggers {
     pollSCM('* * * * * ')
   }
-}
 }
